@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+
+class Customer{
+	String name;
+	
+	public Customer(String name) {
+		this.name = name;
+	}
+	public void display()
+	    {
+	        System.out.println(name);
+	    }
+}
+
+public class Entry {
+	public static void main(String[] args) {
+		Customer customer = new Customer("Vinh");
+		customer.display();
+	}
+}
