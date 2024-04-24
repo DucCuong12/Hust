@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int value;
+    struct Node *next;
+} Node;
+
+Node *makeNode(int v) {
+    Node *p = (Node *)malloc(sizeof(Node));
+    if (p == NULL) {
+        exit(1);
+    } else {
+        p->value = v;
+        p->next = NULL;
+        return p;
+    }
+}
+void addfirst(Node **head, int v){
+    Node *p = makeNode(v);
+    Node *q = *head;
+    while (q!=NULL)
+        {
+            if (q->value == v) 
+                {
+                    return ;
+                }
+            q = q->next;
+        }
+    p->next = *head;
+    *head = p;
+}
+
+void addlast(Node **head, int v){
+    Node *crnode = makeNode(v);
+    Node *p = *head;
+        if (*head == NULL) {
+        *head = crnode;
+        return;
+    }
+    while (p != NULL)
+        {
+            if (p->value == v)
+                {
+                    return ;
+                }
+            if (p->next == NULL)
+                {
+                    p->next = crnode;
+                }
+            p=p->next;
+        }
+    
+}
+
+
+
+void printList(Node *head) {
+    while (head != NULL) {
+        printf("%d ", head->value);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    struct Node *head = NULL;
+
+    for (int i = 0; i < n; i++) {
+        int key;
+        scanf("%d", &key);
+        addlast(&head, key);
+    }
+
+    char command[20];
+    while (scanf("%s", command) != EOF) {
+        if (strcmp(command, "addlast") == 0) {
+            int k;
+            scanf("%d", &k);
+            addlast(&head, k);
+        } else if (strcmp(command, "addfirst") == 0) {
+            int k;
+            scanf("%d", &k);
+            addfirst(&head, k);
+        } else if (strcmp(command, "#") == 0) {
+            break;
+        }
+    }
+
+    printList(head);
+
+    struct Node *temp;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+
+    return 0;
+}
+
