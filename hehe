@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+void generateParentheses(char result[], int pos, int open, int close, int n) {
+    if (close == n) { // Đã thêm đủ n cặp ngoặc
+        printf("%s\n", result);
+        return;
+    }
+
+    if (open > close) { // Nếu có nhiều dấu ngoặc đóng hơn dấu ngoặc mở, ta có thể thêm một dấu ngoặc đóng mới
+        result[pos] = ')';
+        generateParentheses(result, pos + 1, open, close + 1, n);
+    }
+    if (open < n) { // Nếu số lượng dấu ngoặc mở chưa đủ n, ta có thể thêm một dấu ngoặc mở mới
+        result[pos] = '(';
+        generateParentheses(result, pos + 1, open + 1, close, n);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of pairs: ");
+    scanf("%d", &n);
+
+    char result[2 * n + 1]; // Mảng lưu trữ kết quả, có độ dài tối đa là 2*n để chứa tất cả các cặp ngoặc và kết thúc bằng '\0'
+    memset(result, 0, sizeof(result)); // Khởi tạo mảng kết quả với tất cả các phần tử là ký tự null
+
+    generateParentheses(result, 0, 0, 0, n); // Gọi hàm đệ quy để tạo tất cả các cặp ngoặc đúng
+
+    return 0;
+}
